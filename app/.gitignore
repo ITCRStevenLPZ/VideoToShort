@@ -169,3 +169,7 @@ cython_debug/
 *.txt
 *.mp3
 
+# Exception for requirements.txt
+!requirements.txt
+!neon-azimuth-435019-t6-a05228051b6a.json
+

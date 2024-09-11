@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "neon-azimuth-435019-t6",
+  "private_key_id": "a05228051b6a3e36a0e31367c04d4de892268b74",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDzqMMWBf/Q3yun\nUletiyPxXfV50nvZfpaOjjJxKXJk8yufQIKIUPWYv0jETj8N80n8gQD6Az3fcYLp\n+AAxaAQXbv2dbS0LFtmamE2toZydc1LR/lITMJfok6/bM6eBEg/owtf/eS2n+BGO\nIpGfnubpCCMkEKLW4IVGP/g+WhKmMGCNVOw7XpzxGfydeyAVM5HzuOu3h0BHw3l3\nBtyO1u+knLK0gZze7dwQLpdrW7uBO0W6scEdU22DIluSx1eKlJQjou4X8/lmoSAN\njpK+k1xN1ctGT7x5UVRfug/LiPfBTF1ydWZuDoab9LHX5oRgL8V0uLp6rdLqarL4\nJaCdYfyNAgMBAAECggEAB5LhWC09VxK/6Ng2nXsEnP7yAxZF1Jbf1577dmiTLmF1\nFXEMHakPdbYFUMvkEWsp4OnbaFvWU2cM+LFFbnybN4Hr61JaG9s+o3EZ1z5ExuEE\nzcxvD1drj5vUDKchRgA+1svLOMey02LknFuI8e0CTx5BaWB2j1NRETW4tzk5hyza\ns1AVA8mGJ0jjty7+MAPcjP1ZimiFgfa8kBlvguKEaKjLzmEndHtLfnpm2DLeUASe\nPT9wk5PTKQYd6sDd6yFegXkUmPPlgXI88X78Sa0Vqig9z9qOAzYcknStlN9zJ61j\nY77IgroGz5xxOKexjTvubhI9mQpYRHCydhxe1+mQiQKBgQD9hZYTP3WRNeqkecBq\nYfn0P4KZ0tz8Iebhn6S1ci0tRKTiGKjt7QTFepTPyI9sqKeFvdyMSaIp9soNxcK/\nixAXFLKY+lATOcOf1ePFu/wkrEB4mf6Rx5Bp+JnCg8nhtlTFWgHuEYiBahSSVwQv\nH0+GfgzOwaIbNe/D8wZ0v9HzAwKBgQD2Cn7iGrqjzLsvW6kOPUIlbihfuB1qrlWk\no2KJbY/ZRCRFVRmpIFBAORgXdR5uQ2rx/hLyCgOxeJSIyJAc1/rNS9665x84P9TZ\nwSg3hYEK/RTdtLuOAGf/anW5PmayLTE9Te+gRhZKImoV+3okYKpHXnkUq1dYWZIc\nYeZjmUJ1LwKBgCBb5aztQ6dWN23o8GtjuBC57oSNypEQDrUruE1ElomZomYNebps\nr1g5bjcbRVs8J63Fbxok5+LtUhrx7AqgyFv501X9VS0vCU4kcd8yQFu59LywAzM+\nQquUBKQ0SBdcO3O5KlfluwOxs5B+NNWC7JahDidxxawtdT4Qjflm5nhbAoGAVvhy\nzX3hR5FRAXaHFa91uEFuKBeu3kztnRrb8/Q0ivpZT+C7B1uSwoDsES6nKRbPsOa8\nz63WjF8xMgCjYG7ACt2sx6h3Eq0NkkOC8c1RRg8b1xrRyWo/WLvLDUYPiyAKbb8k\n2ySrMF1l3otcK4u35S5x4mqGn4ZZ7Yp1o/NC2KUCgYEAlijHZbwXGOpoSUH+F/w8\nWC1V+pA+yNnr7rhSNFFIRAIUQkcWUDZCpaq5TmmZvt5eO6hIg/oag+8q9E/SECc6\ne3O46ZKs3MKxgwGHxi62QTH2ub0OivAU+hVtzk66vMXrLR+DhxKwJsavLBvn0Jhb\nlozBNwlGidhStU5xP0kV+WU=\n-----END PRIVATE KEY-----\n",
+  "client_email": "speech-api-service-account@neon-azimuth-435019-t6.iam.gserviceaccount.com",
+  "client_id": "117616802116480516435",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/speech-api-service-account%40neon-azimuth-435019-t6.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
