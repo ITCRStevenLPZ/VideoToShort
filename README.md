@@ -1,177 +1,252 @@
-# **Video Short Creator Backend**
+# Custom Video Clipper
 
-## **Overview**
+An advanced AI-powered video processing system that automatically extracts relevant clips from longer videos based on content analysis, transcription, and semantic search.
 
-The backend of this project is designed to process video transcripts and intelligently identify key sections of a video, allowing you to generate short, context-aware clips based on a set of given topics. This is achieved using a BERT-based model that analyzes the transcript, scores the similarity between chunks of text and the given topics, and expands context dynamically to capture complete ideas.
+## Overview
 
-## **Features**
+Custom Video Clipper is a comprehensive solution that uses AI techniques to analyze video content, extract meaningful clips, and create shareable short-form videos. The system processes videos through a pipeline that includes:
 
-- **BERT-based Analysis**: Uses `sentence-transformers` to embed transcript chunks and compute semantic similarity with the provided topics.
-- **Intelligent Context Expansion**: Expands context around high-relevance sections based on semantic similarity, ensuring that entire ideas are captured in the video shorts.
-- **Flexible Customization**: Adjust thresholds and context windows for more fine-tuned results.
-- **Video Clip Generation**: Outputs meaningful timestamp ranges that can be used to extract shorts from videos.
+1. Video to audio conversion
+2. Audio transcription with timestamps
+3. Semantic analysis using vector embeddings
+4. Sentiment analysis
+5. Smart clip extraction and generation
 
-## **Prerequisites**
+The application is built with a modular architecture using FastAPI for the backend API.
 
-- Python 3.7 or higher
-- pip package manager
+## System Architecture
 
-## **Installation**
+```mermaid
+graph TD
+    A[Video Input] --> B[Video to Audio Converter]
+    B --> C[Audio Transcription Service]
+    C --> D[Transcript Processing]
+    D --> E{Processing Type}
+    E -->|Basic| F[Keyword/Phrase Matching]
+    E -->|Enhanced| G[Vector Index Search]
+    G --> H[BERT/Gemini Analyzer]
+    F --> I[Clip Generation]
+    H --> J[Sentiment Analysis]
+    J --> I
+    I --> K[Video Processor]
+    K --> L[Final Clips]
+```
 
-1. **Clone the repository**:
+## Features
 
-    ```bash
-    git clone <repository_url>
-    cd <repository_directory>
-    ```
+- **Video Transcription**: Automated transcription with word-level timestamps
+- **Semantic Search**: Find content related to specific topics or themes using vector embeddings
+- **Sentiment Analysis**: Filter clips based on sentiment (positive, negative, neutral)
+- **Customizable Clip Generation**: Control clip length, format, and quality
+- **API-first Design**: RESTful API for easy integration with other systems
+- **Vector Indexing**: Store and search video content semantically
 
-2. **Create a virtual environment** (optional but recommended):
+## Installation
 
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # For Linux/Mac
-    venv\Scripts\activate  # For Windows
-    ```
+### Prerequisites
 
-3. **Install the required dependencies**:
+- Python 3.10+
+- FFmpeg
+- Google Cloud credentials (for Gemini AI and speech services)
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+### Setup
 
-    The key dependencies are:
-    - `sentence-transformers`: For BERT-based embeddings and semantic similarity.
-    - `torch`: For deep learning and embedding generation.
-    - `scikit-learn`: For cosine similarity calculations.
-    - `fastapi` (if applicable for your API server): To serve the API for processing videos and transcripts.
-    - `moviepy` (if applicable for video processing): For video clip extraction.
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/CustomVideoClipperProject.git
+cd CustomVideoClipperProject/VideoToShort
+```
 
-## **Configuration**
+2. Create a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-- You can adjust the default parameters (such as the model type, thresholds, and context window) directly within the `BERTAnalyzer` class in the backend code.
+3. Install dependencies:
+```bash
+pip install -r app/requirements.txt
+```
 
-### **Key Parameters**:
+4. Set up environment variables (create a `.env` file):
+```
+GEMINI_API_KEY=your_gemini_api_key
+```
 
-- **model_name**: The pre-trained model to use from `sentence-transformers`. Default: `'paraphrase-MiniLM-L6-v2'`.
-- **chunk_size**: Number of transcript sentences to group together into a chunk. Default: `7`.
-- **threshold**: Minimum similarity score required for a chunk to be considered relevant. Default: `0.7`.
-- **context_window**: Number of neighboring chunks to consider when expanding context. Default: `1`.
-- **context_similarity_threshold**: Minimum similarity score required to expand the context intelligently. Default: `0.5`.
+## Usage
 
-## **Usage**
+### Running the API Server
 
-### **Transcript Analysis**
+```bash
+cd app
+uvicorn main:app --reload
+```
 
-The backend processes transcripts and generates timestamped segments of video where the topics are discussed. You can use the `calculate_similarity` method of the `BERTAnalyzer` class to generate intelligent video short timestamps.
+The API will be available at http://localhost:8000. Swagger documentation is available at http://localhost:8000/docs.
 
-1. **Example Code**:
+### Basic Workflow
 
-    ```python
-    from bert_analyzer import BERTAnalyzer
+```mermaid
+sequenceDiagram
+    participant User
+    participant API
+    participant Transcription
+    participant Analysis
+    participant VideoProcessor
 
-    # Initialize the analyzer
-    analyzer = BERTAnalyzer()
+    User->>API: Upload video + Query
+    API->>Transcription: Process video audio
+    Transcription->>API: Return transcript with timestamps
+    API->>Analysis: Find relevant segments
+    Analysis->>API: Return matching segments
+    API->>VideoProcessor: Create clips from matches
+    VideoProcessor->>API: Return generated clips
+    API->>User: Return clip URLs and metadata
+```
 
-    # Input data
-    transcript = "Path to your transcript file or text input"
-    topics = ["machine learning", "artificial intelligence"]
+## API Endpoints
 
-    # Analyze the transcript and generate timestamped clips
-    results = analyzer.calculate_similarity(transcript, topics, threshold=0.7, context_similarity_threshold=0.5)
+### Enhanced Processing
 
-    # Output the results (timestamps and texts)
-    print(results)
-    ```
+```
+POST /api/enhanced/process
+```
 
-2. **Outputs**:
+Process a video with enhanced AI capabilities:
 
-    The output will be a list of segments with the following structure:
+```json
+{
+  "video_path": "/path/to/video.mp4",
+  "query": "Explain the concept of AI",
+  "top_k": 5,
+  "sentiment_filter": 0.2,
+  "min_clip_duration": 5.0,
+  "max_clip_duration": 60.0
+}
+```
 
-    ```json
-    [
-        {
-            "text": "Combined text from the expanded context",
-            "score": 0.82,
-            "start_timestamp": 60,
-            "end_timestamp": 120
-        },
-        ...
-    ]
-    ```
+### Basic Processing
 
-    These results can be used to create video shorts by extracting the relevant clips from the original video using the `start_timestamp` and `end_timestamp`.
+```
+POST /api/process/clips
+```
 
-## **Video Processing (Optional)**
+Process a video with basic keyword/phrase matching:
 
-If you're generating the video clips programmatically, you can use `moviepy` or similar libraries to cut the videos based on the timestamps generated by the `BERTAnalyzer`.
+```json
+{
+  "video_path": "/path/to/video.mp4",
+  "topics": ["AI", "machine learning", "neural networks"],
+  "threshold": 0.6
+}
+```
 
-1. **Example using `moviepy`**:
+## Data Models
 
-    ```python
-    from moviepy.editor import VideoFileClip
+The system uses various data models for processing:
 
-    def extract_clip(video_path, start_time, end_time, output_path):
-        with VideoFileClip(video_path) as video:
-            clip = video.subclip(start_time, end_time)
-            clip.write_videofile(output_path, codec="libx264")
+```mermaid
+classDiagram
+    class ClipRequest {
+        +string video_path
+        +List~string~ topics
+        +float threshold
+    }
+    
+    class EnhancedClipRequest {
+        +string video_path
+        +string query
+        +string index_name
+        +int top_k
+        +float sentiment_filter
+        +string clip_strategy
+        +float min_clip_duration
+        +float max_clip_duration
+    }
+    
+    class SegmentResult {
+        +int id
+        +string text
+        +float start_timestamp
+        +float end_timestamp
+        +float similarity
+        +SentimentInfo sentiment
+    }
+    
+    class ClipResult {
+        +string clip_id
+        +List~SegmentResult~ segments
+        +float start_timestamp
+        +float end_timestamp
+        +float duration
+        +string text
+        +string clip_path
+        +float average_similarity
+        +float average_sentiment
+    }
+    
+    EnhancedClipRequest -- ClipResult : produces
+    SegmentResult -- ClipResult : contains
+```
 
-    # Example usage
-    extract_clip("input_video.mp4", start_time=60, end_time=120, output_path="short_clip.mp4")
-    ```
+## Core Components
 
-## **API Integration (Optional)**
+### Transcription Service
 
-If you’re running a FastAPI server to expose this functionality as an API, you can integrate `BERTAnalyzer` into your FastAPI routes.
+Handles audio extraction and transcription using Google Cloud Speech-to-Text API. Provides word-level and sentence-level timestamped transcripts.
 
-1. **FastAPI Route Example**:
+### Vector Index Service
 
-    ```python
-    from fastapi import FastAPI, UploadFile, Form
-    from bert_analyzer import BERTAnalyzer
+Creates and manages vector embeddings for semantic search. Indexes transcripts for efficient similarity search.
 
-    app = FastAPI()
-    analyzer = BERTAnalyzer()
+### BERT/Gemini Analyzer
 
-    @app.post("/process")
-    async def process_video(transcript: str = Form(...), topics: str = Form(...)):
-        topics_list = topics.split(",")  # Assume topics are passed as a comma-separated string
-        results = analyzer.calculate_similarity(transcript, topics_list)
-        return {"clips": results}
-    ```
+Uses BERT embeddings or Gemini AI for semantic analysis and text similarity.
 
-2. **Run the API**:
+### Sentiment Analyzer
 
-    ```bash
-    uvicorn main:app --reload
-    ```
+Analyzes the sentiment of transcript segments to filter content based on emotional tone.
 
-    You can then send a POST request to `/process` with the transcript and topics to get the intelligent video clip timestamps.
+### Video Processor
 
-## **Customizing for Your Needs**
+Handles the actual cutting and formatting of video clips based on the identified segments.
 
-Feel free to adjust the following parameters in the `BERTAnalyzer` class to fit your specific needs:
-- **Model Type**: You can change the `model_name` to use a different pre-trained model from `sentence-transformers`.
-- **Chunk Size and Thresholds**: Adjust the `chunk_size`, `threshold`, and `context_similarity_threshold` to fine-tune how much of the transcript is analyzed and included in the final output.
+```mermaid
+graph LR
+    A[Video File] --> B[Video to Audio]
+    B --> C[Transcription]
+    C --> D[Transcript Processing]
+    D --> E[Vector Indexing]
+    D --> F[Sentiment Analysis]
+    E --> G[Similarity Search]
+    G --> H[Segment Selection]
+    F --> H
+    H --> I[Clip Generation]
+    I --> J[Final Clips]
+```
 
-## **Troubleshooting**
+## Configuration
 
-1. **Large Timestamp Ranges**: If you notice overly large ranges of timestamps, reduce the `context_similarity_threshold` or cap the maximum range duration in the `expand_chunk_context` function.
-2. **Low Accuracy**: Try different pre-trained models or adjust the similarity thresholds to capture more relevant results. For example, using a model like `all-MiniLM-L6-v2` may give different results depending on the input data.
+The system configuration is centralized in `core/config.py` and includes:
 
-## **Contributing**
+- API keys and service credentials
+- Output directory paths
+- Logging settings
+- Video processing parameters
 
-Feel free to contribute to this project by opening issues, suggesting improvements, or submitting pull requests.
+## Logging
 
-## **License**
+Comprehensive logging is implemented throughout the application. Logs are written to:
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- Console (for development)
+- `logs/app.log` (for production)
 
----
+See `core/LOGGING_GUIDE.md` for details on the logging system.
 
-### **Contact Information**
+## License
 
-For any questions, please feel free to reach out at [your-email@example.com].
+This project is licensed under the terms of the license included in the repository.
 
----
+## Contributing
 
-This `README.md` provides a comprehensive guide to using the backend for transcript analysis and video clip generation, along with key configurations and usage examples.
+Contributions are welcome! Please feel free to submit a Pull Request.
